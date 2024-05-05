@@ -4,16 +4,23 @@ using UnityEngine.Audio;
 
 public class SettingsManager : MonoBehaviour
 {
-    public Slider MasterVolume, MusicVolume, SFXVolume;
+    [Header("Volume Sliders")]
+    public Slider MasterVolume;
+    public Slider MusicVolume;
+    public Slider SFXVolume;
+
+    [Header("Audio Mixer")]
     public AudioMixer mainAudioMixer;
 
-    private float defaultMasterVolume, defaultMusicVolume, defaultSFXVolume;
+    private float defaultMasterVolume;
+    private float defaultMusicVolume;
+    private float defaultSFXVolume;
 
     private void Start() => SaveDefaultVolumes();
 
-    public void ChangeMasterVolume() => ChangeVolume("MasterVolume", MasterVolume);
-    public void ChangeMusicVolume() => ChangeVolume("MusicVolume", MusicVolume);
-    public void ChangeSFXVolume() => ChangeVolume("SFXVolume", SFXVolume);
+    public void ChangeMasterVolume() => ChangeVolume("MasterVolume", MasterVolume.value);
+    public void ChangeMusicVolume() => ChangeVolume("MusicVolume", MusicVolume.value);
+    public void ChangeSFXVolume() => ChangeVolume("SFXVolume", SFXVolume.value);
 
     public void ResetVolumeSettings()
     {
@@ -28,7 +35,7 @@ public class SettingsManager : MonoBehaviour
         defaultSFXVolume = SFXVolume.value;
     }
 
-    private void ChangeVolume(string parameter, Slider slider) => mainAudioMixer.SetFloat(parameter, slider.value);
+    private void ChangeVolume(string parameter, float value) => mainAudioMixer.SetFloat(parameter, value);
 
     private void ResetSliderValues()
     {
